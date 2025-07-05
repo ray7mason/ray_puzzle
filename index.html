@@ -7,16 +7,22 @@
     <link rel="stylesheet" href="./static/css/mine.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <style>
-        /* Disable text selection */
+        /* Disable text selection for body but allow it for inputs */
         body {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
+        input, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
     </style>
 </head>
-<body oncontextmenu="return false" onkeydown="return false">
+<body>
     <!-- Puzzle Game Section -->
     <div class="ui container" style="margin-top: 40px;">
         <h1 class="ui header" style="text-align:center;">Puzzles for folks in Seattle</h1>
@@ -51,6 +57,23 @@
                 <button class="ui primary button" type="submit" style="width:100%; margin-top: 15px;">Submit</button>
             </form>
             <div id="puzzle2-message" class="ui message" style="display:none; margin-top: 15px;"></div>
+        </div>
+
+        <!-- Puzzle 3 (initially hidden) -->
+        <div id="puzzle3" class="ui segment" style="max-width: 500px; margin: 0 auto; display: none;">
+            <div class="ui large header" style="text-align:center; margin-bottom: 20px;">Puzzle 3</div>
+            <div class="ui medium header" style="text-align:center; margin-bottom: 20px; font-size: 1.2em;">
+                July lights up with <strong>Firework</strong>,<br>
+                September hums to the sound of <strong>Numb</strong>.<br>
+                A single word still unlocks the past.
+            </div>
+            <form id="puzzle3-form" class="ui form">
+                <div class="field">
+                    <input type="text" placeholder="Enter your answer" required>
+                </div>
+                <button class="ui primary button" type="submit" style="width:100%; margin-top: 15px;">Submit</button>
+            </form>
+            <div id="puzzle3-message" class="ui message" style="display:none; margin-top: 15px;"></div>
         </div>
     </div>
 
@@ -96,6 +119,7 @@
     // Obfuscated answers using simple encoding
     const _0x4f2a = ['d', 'u', 'c', 'k'];
     const _0x7b3c = ['s', 'p', 'a', 'c', 'e', 'n', 'e', 'e', 'd', 'l', 'e'];
+    const _0x9d4e = ['k', 'e', 'y'];
     
     function _0x2e1f(arr) { return arr.join(''); }
     
@@ -118,7 +142,7 @@
             }, 2000);
         } else {
             messageDiv.className = 'ui negative message';
-            messageDiv.textContent = 'Oops! That is not correct. Try again!';
+            messageDiv.textContent = 'Incorrect. Try again.';
             messageDiv.style.display = 'block';
         }
     });
@@ -132,12 +156,37 @@
         
         if (answer === _0x2e1f(_0x7b3c)) {
             messageDiv.className = 'ui positive message';
-            messageDiv.textContent = 'Excellent! 🗼 You solved the second puzzle! The Space Needle welcomes you!';
+            messageDiv.textContent = 'Excellent! 🗼 You solved the second puzzle!';
+            messageDiv.style.display = 'block';
+            
+            // Show puzzle 3 after a short delay
+            setTimeout(() => {
+                document.getElementById('puzzle2').style.display = 'none';
+                document.getElementById('puzzle3').style.display = 'block';
+            }, 2000);
         } else {
             messageDiv.className = 'ui negative message';
-            messageDiv.textContent = 'Not quite right. Think about Seattle landmarks...';
+            messageDiv.textContent = 'Incorrect. Try again.';
+            messageDiv.style.display = 'block';
         }
-        messageDiv.style.display = 'block';
+    });
+
+    // Puzzle 3 handler
+    document.getElementById('puzzle3-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const input = this.querySelector('input');
+        const answer = input.value.toLowerCase().replace(/\s/g, '');
+        const messageDiv = document.getElementById('puzzle3-message');
+        
+        if (answer === _0x2e1f(_0x9d4e)) {
+            messageDiv.className = 'ui positive message';
+            messageDiv.textContent = 'Congratulations! 🔑 You solved all three puzzles!';
+            messageDiv.style.display = 'block';
+        } else {
+            messageDiv.className = 'ui negative message';
+            messageDiv.textContent = 'Incorrect. Try again.';
+            messageDiv.style.display = 'block';
+        }
     });
     </script>
 
