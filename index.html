@@ -6,32 +6,25 @@
     <title>Home Page</title>
     <link rel="stylesheet" href="./static/css/mine.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <style>
+        /* Disable text selection */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
 </head>
-<body>
-    <!--navigation-->
-    <nav class="ui inverted attached segment m-padded-tb-mini">
-        <div class="ui container">
-            <div class="ui inverted secondary menu">
-                <h2 class="ui teal header item">Blog</h2>
-                <a href="#" class="item"><i class="home icon"></i>Homepage</a>
-                <a href="#" class="item"><i class="idea icon"></i>Category</a>
-                <a href="#" class="item"><i class="tag icon"></i>Label</a>
-                <a href="#" class="item"><i class="info icon"></i>About me</a>
-                <div class="right item">
-                    <div class="ui icon inverted transparent input">
-                        <input type="text" placeholder="Search...">
-                        <i class="search link icon"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+<body oncontextmenu="return false" onkeydown="return false">
     <!-- Puzzle Game Section -->
     <div class="ui container" style="margin-top: 40px;">
         <h1 class="ui header" style="text-align:center;">Puzzles for folks in Seattle</h1>
-        <div class="ui segment" style="max-width: 500px; margin: 0 auto;">
+        
+        <!-- Puzzle 1 -->
+        <div id="puzzle1" class="ui segment" style="max-width: 500px; margin: 0 auto;">
             <div class="ui large header" style="text-align:center; margin-bottom: 20px;">一笔静绿，中心留墨</div>
-            <form id="puzzle-form" class="ui form">
+            <form id="puzzle1-form" class="ui form">
                 <div class="fields" style="justify-content:center;">
                     <div class="field"><input type="text" maxlength="1" required></div>
                     <div class="field"><input type="text" maxlength="1" required></div>
@@ -40,87 +33,114 @@
                 </div>
                 <button class="ui primary button" type="submit" style="width:100%; margin-top: 15px;">Submit</button>
             </form>
-            <div id="puzzle-message" class="ui message" style="display:none; margin-top: 15px;"></div>
+            <div id="puzzle1-message" class="ui message" style="display:none; margin-top: 15px;"></div>
+        </div>
+
+        <!-- Puzzle 2 (initially hidden) -->
+        <div id="puzzle2" class="ui segment" style="max-width: 500px; margin: 0 auto; display: none;">
+            <div class="ui large header" style="text-align:center; margin-bottom: 20px;">四位旧识</div>
+            <div class="ui medium header" style="text-align:center; margin-bottom: 20px; font-size: 1.2em;">
+                Madrona 与 Magnolia 对望；<br>
+                Coe 向 Jefferson 静静走近。<br>
+                不曾言语，却也重逢。
+            </div>
+            <form id="puzzle2-form" class="ui form">
+                <div class="field">
+                    <input type="text" placeholder="Enter your answer" required>
+                </div>
+                <button class="ui primary button" type="submit" style="width:100%; margin-top: 15px;">Submit</button>
+            </form>
+            <div id="puzzle2-message" class="ui message" style="display:none; margin-top: 15px;"></div>
         </div>
     </div>
+
     <script>
-    document.getElementById('puzzle-form').addEventListener('submit', function(e) {
+    // Anti-debugging techniques
+    (function() {
+        // Disable F12, Ctrl+Shift+I, Ctrl+U
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Console warning
+        console.log('%cStop!', 'color: red; font-size: 50px; font-weight: bold;');
+        console.log('%cThis is a puzzle game. Cheating ruins the fun!', 'color: red; font-size: 20px;');
+        
+        // Detect dev tools
+        let devtools = {open: false, orientation: null};
+        setInterval(() => {
+            const threshold = 160;
+            if (window.outerHeight - window.innerHeight > threshold || 
+                window.outerWidth - window.innerWidth > threshold) {
+                if (!devtools.open) {
+                    devtools.open = true;
+                    console.log('%cDev tools detected! Please close them to continue.', 'color: red; font-size: 20px;');
+                }
+            } else {
+                devtools.open = false;
+            }
+        }, 500);
+    })();
+
+    // Obfuscated answers using simple encoding
+    const _0x4f2a = ['d', 'u', 'c', 'k'];
+    const _0x7b3c = ['s', 'p', 'a', 'c', 'e', 'n', 'e', 'e', 'd', 'l', 'e'];
+    
+    function _0x2e1f(arr) { return arr.join(''); }
+    
+    // Puzzle 1 handler
+    document.getElementById('puzzle1-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const inputs = Array.from(this.querySelectorAll('input'));
         const answer = inputs.map(input => input.value).join('').toLowerCase();
-        const messageDiv = document.getElementById('puzzle-message');
-        if (answer === 'duck') {
+        const messageDiv = document.getElementById('puzzle1-message');
+        
+        if (answer === _0x2e1f(_0x4f2a)) {
             messageDiv.className = 'ui positive message';
             messageDiv.textContent = 'Correct! 🦆 You solved the puzzle!';
+            messageDiv.style.display = 'block';
+            
+            // Show puzzle 2 after a short delay
+            setTimeout(() => {
+                document.getElementById('puzzle1').style.display = 'none';
+                document.getElementById('puzzle2').style.display = 'block';
+            }, 2000);
         } else {
             messageDiv.className = 'ui negative message';
             messageDiv.textContent = 'Oops! That is not correct. Try again!';
+            messageDiv.style.display = 'block';
+        }
+    });
+
+    // Puzzle 2 handler
+    document.getElementById('puzzle2-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const input = this.querySelector('input');
+        const answer = input.value.toLowerCase().replace(/\s/g, '');
+        const messageDiv = document.getElementById('puzzle2-message');
+        
+        if (answer === _0x2e1f(_0x7b3c)) {
+            messageDiv.className = 'ui positive message';
+            messageDiv.textContent = 'Excellent! 🗼 You solved the second puzzle! The Space Needle welcomes you!';
+        } else {
+            messageDiv.className = 'ui negative message';
+            messageDiv.textContent = 'Not quite right. Think about Seattle landmarks...';
         }
         messageDiv.style.display = 'block';
     });
     </script>
-    <!-- End Puzzle Game Section -->
-    <!--中间内容-->
-    <div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
-    <!--底部注脚-->
-    <footer class="ui inverted vertical segment m-padded-tb-max">
-        <div class="ui container">
-            <div class="ui inverted divided grid">
-                <div class="three wide column">
-                    <img src="./static/images/qrcode.png" class="ui rounded image" alt="" style="width: 100px">
-                </div>
-                <div class="three wide column">
-                    <h4 class="ui inverted header">New blogs</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">User story</a>
-                        <a href="#" class="item">User story</a>
-                        <a href="#" class="item">User story</a>
-                    </div>
-                </div><div class="three wide column">
-                    <h4 class="ui inverted header">New blogs2</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">User story</a>
-                        <a href="#" class="item">User story</a>
-                        <a href="#" class="item">User story</a>
-                    </div>
-                </div>
-                <div class="seven wide column">
-                    <h4 class="ui inverted header">New blogs3</h4>
-                    <p>
-                        I'm Yihang Wang from China and studying in USC!
-                    </p>
-                </div>
-            </div>
-            <div class="ui inverted section divider" align="center">
-                <p>Copyright © 2018-2020 Ray</p>
-            </div>
-        </div>
-    </footer>
+
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 </body>
