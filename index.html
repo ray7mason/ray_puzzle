@@ -10,7 +10,7 @@
     <style>
         /* Vintage Seattle Theme */
         body {
-            background: linear-gradient(135deg, #f5f5dc 0%, #e8e8d0 50%, #d4d4c4 100%);
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600"><defs><pattern id="seattleMap" patternUnits="userSpaceOnUse" width="800" height="600"><rect width="800" height="600" fill="%23f5f5dc"/><path d="M100,200 Q150,150 200,200 T300,200 Q350,180 400,200 T500,200 Q550,220 600,200 T700,200" stroke="%23d4d4c4" stroke-width="2" fill="none" opacity="0.3"/><path d="M150,250 Q200,230 250,250 T350,250 Q400,270 450,250 T550,250 Q600,230 650,250 T750,250" stroke="%23d4d4c4" stroke-width="2" fill="none" opacity="0.3"/><circle cx="200" cy="180" r="8" fill="%23a0522d" opacity="0.2"/><circle cx="400" cy="160" r="6" fill="%23a0522d" opacity="0.2"/><circle cx="600" cy="190" r="7" fill="%23a0522d" opacity="0.2"/><circle cx="300" cy="280" r="5" fill="%23a0522d" opacity="0.2"/><circle cx="500" cy="300" r="6" fill="%23a0522d" opacity="0.2"/><text x="200" y="200" font-family="serif" font-size="12" fill="%238b4513" opacity="0.2">Seattle</text><text x="400" y="170" font-family="serif" font-size="10" fill="%238b4513" opacity="0.2">Downtown</text><text x="600" y="200" font-family="serif" font-size="10" fill="%238b4513" opacity="0.2">Ballard</text><text x="300" y="290" font-family="serif" font-size="10" fill="%238b4513" opacity="0.2">Capitol Hill</text><text x="500" y="310" font-family="serif" font-size="10" fill="%238b4513" opacity="0.2">Queen Anne</text></pattern></defs><rect width="100%" height="100%" fill="url(%23seattleMap)"/></svg>') repeat;
             background-attachment: fixed;
             font-family: 'Crimson Text', serif;
             color: #2c3e50;
@@ -22,6 +22,18 @@
         }
         
         body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(245, 245, 220, 0.7) 0%, rgba(232, 232, 208, 0.8) 50%, rgba(212, 212, 196, 0.7) 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        body::after {
             content: '';
             position: fixed;
             top: 0;
@@ -54,7 +66,7 @@
         
         /* Vintage Puzzle Containers */
         .vintage-segment {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border: 2px solid #8b4513;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(139, 69, 19, 0.2);
@@ -86,7 +98,7 @@
         
         /* Vintage Input Fields */
         .vintage-input input {
-            background: rgba(245, 245, 220, 0.8) !important;
+            background: rgba(245, 245, 220, 0.9) !important;
             border: 2px solid #8b4513 !important;
             border-radius: 4px !important;
             font-family: 'Crimson Text', serif !important;
@@ -94,7 +106,7 @@
         }
         
         .vintage-input input:focus {
-            background: rgba(255, 255, 255, 0.95) !important;
+            background: rgba(255, 255, 255, 0.98) !important;
             border-color: #a0522d !important;
             box-shadow: 0 0 8px rgba(139, 69, 19, 0.3) !important;
         }
@@ -172,22 +184,24 @@
     <div class="ui container" style="margin-top: 40px;">
         <h1 class="ui header vintage-header seattle-accent" style="text-align:center;">Seattle Puzzles</h1>
         
-        <!-- Puzzle 1 -->
+        <!-- Puzzle 1 (formerly Puzzle 3) -->
         <div id="puzzle1" class="ui segment puzzle-container vintage-segment" style="max-width: 500px; margin: 0 auto;">
-            <div class="ui large header" style="text-align:center; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #34495e;">一笔静绿，中心留墨</div>
+            <div class="ui large header" style="text-align:center; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #34495e;">Puzzle 1</div>
+            <div class="ui medium header" style="text-align:center; margin-bottom: 20px; font-size: 1.2em; font-family: 'Crimson Text', serif;">
+                July lights up with <strong>Firework</strong>,<br>
+                September hums to the sound of <strong>Numb</strong>.<br>
+                A single word still unlocks the past.
+            </div>
             <form id="puzzle1-form" class="ui form vintage-input">
-                <div class="fields" style="justify-content:center;">
-                    <div class="field"><input type="text" maxlength="1" required></div>
-                    <div class="field"><input type="text" maxlength="1" required></div>
-                    <div class="field"><input type="text" maxlength="1" required></div>
-                    <div class="field"><input type="text" maxlength="1" required></div>
+                <div class="field">
+                    <input type="text" placeholder="Enter your answer" required>
                 </div>
                 <button class="ui primary button vintage-button" type="submit" style="width:100%; margin-top: 15px;">Submit</button>
             </form>
             <div id="puzzle1-message" class="ui message" style="display:none; margin-top: 15px;"></div>
         </div>
 
-        <!-- Puzzle 2 (initially hidden) -->
+        <!-- Puzzle 2 (unchanged) -->
         <div id="puzzle2" class="ui segment puzzle-container vintage-segment" style="max-width: 500px; margin: 0 auto; display: none; opacity: 0;">
             <div class="ui large header" style="text-align:center; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #34495e;">四位旧识</div>
             <div class="ui medium header" style="text-align:center; margin-bottom: 20px; font-size: 1.2em; font-family: 'Crimson Text', serif;">
@@ -204,17 +218,15 @@
             <div id="puzzle2-message" class="ui message" style="display:none; margin-top: 15px;"></div>
         </div>
 
-        <!-- Puzzle 3 (initially hidden) -->
+        <!-- Puzzle 3 (formerly Puzzle 1) -->
         <div id="puzzle3" class="ui segment puzzle-container vintage-segment" style="max-width: 500px; margin: 0 auto; display: none; opacity: 0;">
-            <div class="ui large header" style="text-align:center; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #34495e;">Puzzle 3</div>
-            <div class="ui medium header" style="text-align:center; margin-bottom: 20px; font-size: 1.2em; font-family: 'Crimson Text', serif;">
-                July lights up with <strong>Firework</strong>,<br>
-                September hums to the sound of <strong>Numb</strong>.<br>
-                A single word still unlocks the past.
-            </div>
+            <div class="ui large header" style="text-align:center; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #34495e;">一笔静绿，中心留墨</div>
             <form id="puzzle3-form" class="ui form vintage-input">
-                <div class="field">
-                    <input type="text" placeholder="Enter your answer" required>
+                <div class="fields" style="justify-content:center;">
+                    <div class="field"><input type="text" maxlength="1" required></div>
+                    <div class="field"><input type="text" maxlength="1" required></div>
+                    <div class="field"><input type="text" maxlength="1" required></div>
+                    <div class="field"><input type="text" maxlength="1" required></div>
                 </div>
                 <button class="ui primary button vintage-button" type="submit" style="width:100%; margin-top: 15px;">Submit</button>
             </form>
@@ -262,9 +274,9 @@
     })();
 
     // Obfuscated answers using simple encoding
-    const _0x4f2a = ['d', 'u', 'c', 'k'];
-    const _0x7b3c = ['s', 'p', 'a', 'c', 'e', 'n', 'e', 'e', 'd', 'l', 'e'];
-    const _0x9d4e = ['k', 'e', 'y'];
+    const _0x4f2a = ['k', 'e', 'y']; // Now puzzle 1 answer
+    const _0x7b3c = ['s', 'p', 'a', 'c', 'e', 'n', 'e', 'e', 'd', 'l', 'e']; // Puzzle 2 answer
+    const _0x9d4e = ['d', 'u', 'c', 'k']; // Now puzzle 3 answer
     
     function _0x2e1f(arr) { return arr.join(''); }
     
@@ -290,16 +302,16 @@
         }, 1500);
     }
     
-    // Puzzle 1 handler
+    // Puzzle 1 handler (formerly Puzzle 3)
     document.getElementById('puzzle1-form').addEventListener('submit', function(e) {
         e.preventDefault();
-        const inputs = Array.from(this.querySelectorAll('input'));
-        const answer = inputs.map(input => input.value).join('').toLowerCase();
+        const input = this.querySelector('input');
+        const answer = input.value.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle1-message');
         
         if (answer === _0x2e1f(_0x4f2a)) {
             messageDiv.className = 'ui positive message success-message';
-            messageDiv.textContent = 'Correct! 🦆 You solved the puzzle!';
+            messageDiv.textContent = 'Correct! 🔑 You solved the first puzzle!';
             messageDiv.style.display = 'block';
             
             // Transition to puzzle 2 with nature effects
@@ -313,7 +325,7 @@
         }
     });
 
-    // Puzzle 2 handler
+    // Puzzle 2 handler (unchanged)
     document.getElementById('puzzle2-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
@@ -336,16 +348,16 @@
         }
     });
 
-    // Puzzle 3 handler
+    // Puzzle 3 handler (formerly Puzzle 1)
     document.getElementById('puzzle3-form').addEventListener('submit', function(e) {
         e.preventDefault();
-        const input = this.querySelector('input');
-        const answer = input.value.toLowerCase().replace(/\s/g, '');
+        const inputs = Array.from(this.querySelectorAll('input'));
+        const answer = inputs.map(input => input.value).join('').toLowerCase();
         const messageDiv = document.getElementById('puzzle3-message');
         
         if (answer === _0x2e1f(_0x9d4e)) {
             messageDiv.className = 'ui positive message success-message';
-            messageDiv.textContent = 'Congratulations! 🔑 You solved all three puzzles!';
+            messageDiv.textContent = 'Congratulations! 🦆 You solved all three puzzles!';
             messageDiv.style.display = 'block';
             
             // Add final nature celebration effect
