@@ -252,11 +252,8 @@
         <div id="puzzle3" class="ui segment puzzle-container vintage-segment" style="max-width: 500px; margin: 0 auto; display: none; opacity: 0;">
             <div class="ui large header" style="text-align:center; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #34495e;">一笔静绿，中心留墨</div>
             <form id="puzzle3-form" class="ui form vintage-input">
-                <div class="fields" style="justify-content:center;">
-                    <div class="field"><input type="text" maxlength="1" required></div>
-                    <div class="field"><input type="text" maxlength="1" required></div>
-                    <div class="field"><input type="text" maxlength="1" required></div>
-                    <div class="field"><input type="text" maxlength="1" required></div>
+                <div class="field">
+                    <input type="text" placeholder="Enter your answer" required>
                 </div>
                 <button class="ui primary button vintage-button" type="submit" style="width:100%; margin-top: 15px;">Submit</button>
             </form>
@@ -313,6 +310,7 @@
     const _0x4f2a = ['k', 'e', 'y']; // Now puzzle 1 answer
     const _0x7b3c = ['s', 'p', 'a', 'c', 'e', 'n', 'e', 'e', 'd', 'l', 'e']; // Puzzle 2 answer
     const _0x9d4e = ['d', 'u', 'c', 'k']; // Now puzzle 3 answer
+    const _0x7f8g = ['d', 'u', 'c', 'k', 'i', 's', 'l', 'a', 'n', 'd']; // Puzzle 3 alternative answer
     
     function _0x2e1f(arr) { return arr.join(''); }
     
@@ -352,12 +350,26 @@
     
     function handleHintClick(puzzleNum, hintState, hintMsg) {
         if (hintState === 0) {
-            hintMsg.textContent = 'Are you sure?';
-            // Track "Are you sure?" click
-            gtag('event', `puzzle_${puzzleNum}_hint_confirmation`, {
-                'event_category': 'puzzle_interaction',
-                'event_label': `puzzle_${puzzleNum}_hint_confirmation`
-            });
+            // Show prompt for user input
+            const userInput = prompt('Type "我服了" to get a hint:');
+            if (userInput && userInput.trim() === '我服了') {
+                hintMsg.textContent = hints[puzzleNum];
+                // Track actual hint reveal
+                gtag('event', `puzzle_${puzzleNum}_hint_reveal`, {
+                    'event_category': 'puzzle_interaction',
+                    'event_label': `puzzle_${puzzleNum}_hint_reveal`,
+                    'value': puzzleNum
+                });
+            } else if (userInput !== null) {
+                // User entered something but not correct
+                hintMsg.textContent = 'That\'s not the right phrase. Try again.';
+                // Track failed attempt
+                gtag('event', `puzzle_${puzzleNum}_hint_failed`, {
+                    'event_category': 'puzzle_interaction',
+                    'event_label': `puzzle_${puzzleNum}_hint_failed`,
+                    'value': puzzleNum
+                });
+            }
         } else if (hintState === 1) {
             hintMsg.textContent = hints[puzzleNum];
             // Track actual hint reveal
@@ -492,8 +504,8 @@
     // Puzzle 3 handler (formerly Puzzle 1)
     document.getElementById('puzzle3-form').addEventListener('submit', function(e) {
         e.preventDefault();
-        const inputs = Array.from(this.querySelectorAll('input'));
-        const answer = inputs.map(input => input.value).join('').toLowerCase();
+        const input = this.querySelector('input');
+        const answer = input.value.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle3-message');
         
         // Track puzzle submission
@@ -503,7 +515,7 @@
             'value': 3
         });
         
-        if (answer === _0x2e1f(_0x9d4e)) {
+        if (answer === _0x2e1f(_0x9d4e) || answer === _0x2e1f(_0x7f8g)) {
             messageDiv.className = 'ui positive message success-message';
             messageDiv.textContent = 'Congratulations! 🦆 You solved all three puzzles!';
             messageDiv.style.display = 'block';
