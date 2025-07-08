@@ -339,7 +339,7 @@
         hintBtn.addEventListener('click', function(e) {
             e.preventDefault();
             // Track hint click in Google Analytics
-            gtag('event', 'hint_click', {
+            gtag('event', `puzzle_${puzzleNum}_hint`, {
                 'event_category': 'puzzle_interaction',
                 'event_label': `puzzle_${puzzleNum}_hint_click`,
                 'value': hintState + 1
@@ -354,14 +354,14 @@
         if (hintState === 0) {
             hintMsg.textContent = 'Are you sure?';
             // Track "Are you sure?" click
-            gtag('event', 'hint_confirmation', {
+            gtag('event', `puzzle_${puzzleNum}_hint_confirmation`, {
                 'event_category': 'puzzle_interaction',
                 'event_label': `puzzle_${puzzleNum}_hint_confirmation`
             });
         } else if (hintState === 1) {
             hintMsg.textContent = hints[puzzleNum];
             // Track actual hint reveal
-            gtag('event', 'hint_reveal', {
+            gtag('event', `puzzle_${puzzleNum}_hint_reveal`, {
                 'event_category': 'puzzle_interaction',
                 'event_label': `puzzle_${puzzleNum}_hint_reveal`,
                 'value': puzzleNum
@@ -409,7 +409,7 @@
         const messageDiv = document.getElementById('puzzle1-message');
         
         // Track puzzle submission
-        gtag('event', 'puzzle_submit', {
+        gtag('event', 'puzzle_1_submit', {
             'event_category': 'puzzle_interaction',
             'event_label': 'puzzle_1_submit',
             'value': 1
@@ -421,7 +421,7 @@
             messageDiv.style.display = 'block';
             
             // Track correct answer
-            gtag('event', 'puzzle_correct', {
+            gtag('event', 'puzzle_1_correct', {
                 'event_category': 'puzzle_interaction',
                 'event_label': 'puzzle_1_correct',
                 'value': 1
@@ -437,7 +437,7 @@
             messageDiv.style.display = 'block';
             
             // Track incorrect answer
-            gtag('event', 'puzzle_incorrect', {
+            gtag('event', 'puzzle_1_incorrect', {
                 'event_category': 'puzzle_interaction',
                 'event_label': 'puzzle_1_incorrect',
                 'value': 1
@@ -453,7 +453,7 @@
         const messageDiv = document.getElementById('puzzle2-message');
         
         // Track puzzle submission
-        gtag('event', 'puzzle_submit', {
+        gtag('event', 'puzzle_2_submit', {
             'event_category': 'puzzle_interaction',
             'event_label': 'puzzle_2_submit',
             'value': 2
@@ -465,7 +465,7 @@
             messageDiv.style.display = 'block';
             
             // Track correct answer
-            gtag('event', 'puzzle_correct', {
+            gtag('event', 'puzzle_2_correct', {
                 'event_category': 'puzzle_interaction',
                 'event_label': 'puzzle_2_correct',
                 'value': 2
@@ -481,7 +481,7 @@
             messageDiv.style.display = 'block';
             
             // Track incorrect answer
-            gtag('event', 'puzzle_incorrect', {
+            gtag('event', 'puzzle_2_incorrect', {
                 'event_category': 'puzzle_interaction',
                 'event_label': 'puzzle_2_incorrect',
                 'value': 2
@@ -497,7 +497,7 @@
         const messageDiv = document.getElementById('puzzle3-message');
         
         // Track puzzle submission
-        gtag('event', 'puzzle_submit', {
+        gtag('event', 'puzzle_3_submit', {
             'event_category': 'puzzle_interaction',
             'event_label': 'puzzle_3_submit',
             'value': 3
@@ -509,13 +509,13 @@
             messageDiv.style.display = 'block';
             
             // Track correct answer and completion
-            gtag('event', 'puzzle_correct', {
+            gtag('event', 'puzzle_3_correct', {
                 'event_category': 'puzzle_interaction',
                 'event_label': 'puzzle_3_correct',
                 'value': 3
             });
             
-            gtag('event', 'puzzle_completion', {
+            gtag('event', 'all_puzzles_completed', {
                 'event_category': 'puzzle_interaction',
                 'event_label': 'all_puzzles_completed',
                 'value': 3
@@ -531,7 +531,7 @@
             messageDiv.style.display = 'block';
             
             // Track incorrect answer
-            gtag('event', 'puzzle_incorrect', {
+            gtag('event', 'puzzle_3_incorrect', {
                 'event_category': 'puzzle_interaction',
                 'event_label': 'puzzle_3_incorrect',
                 'value': 3
